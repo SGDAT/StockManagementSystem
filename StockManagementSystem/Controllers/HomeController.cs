@@ -4,34 +4,28 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using StockManagementSystem.Data;
+using StockManagementSystem.Data.ViewModels;
 using StockManagementSystem.Models;
 
 namespace StockManagementSystem.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IDataManager dataManager;
+
+        public HomeController(IDataManager dataManager)
+        {
+            this.dataManager = dataManager;
+        }
         public IActionResult Index()
         {
-            return View();
-        }
+            HomeViewModel model = new HomeViewModel
+            {
+                stockViewModels = dataManager.GetStocks().OrderBy(s=>s.Fruit)
+            };
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
