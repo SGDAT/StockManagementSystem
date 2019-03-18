@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockManagementSystem.Data;
 
 namespace StockManagementSystem.Controllers
 {
+    [Authorize]
     public class StocksController : Controller
     {
         private readonly IDataManager dataManager;
